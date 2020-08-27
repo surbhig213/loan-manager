@@ -1,0 +1,163 @@
+<head>
+ <style>
+ table {
+   font-family: arial, sans-serif;
+   border-collapse: collapse;
+   width: 100%;
+ }
+
+ td, th {
+   border: 1px solid #dddddd;
+   text-align: left;
+   padding: 8px;
+ }
+
+ tr:nth-child(even) {
+   background-color: #dddddd;
+ }
+
+ form {
+  border: 3px solid #f1f1f1;
+}
+
+/* Full-width inputs */
+input[type=text], input[type=password], input[type=email], input[type=number] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #008CBA;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  width: 50%;
+}
+
+body{
+  width: 70%;
+  margin: auto;
+}
+
+a{
+  font-size: 20px;
+}
+
+select{
+  font-size: 16px;
+}
+</style>
+</head>
+
+<!-- Register Template -->
+<template name="register">
+  <div style="text-align: right">
+    <a href = "{{pathFor 'login'}}">Login</a>
+  </div>
+
+  <h2>Signup</h2>
+  <form class="register container">
+    <p>Email: <input type="email" id="email" name="email"></p>
+    <p>Password: <input type="password" id="password" name="password"></p>
+    <p>Role: 
+      <select name="roles" id="role">
+        <option value="admin">Admin</option>
+        <option value="lender">Lender</option>
+        <option value="borrower">Borrower</option>
+      </select>
+    </p>
+    <p><button type="button" id="register-button">SignUp</button></p>
+  </form>
+</template>
+
+<!-- Login Template -->
+<template name="login">
+  <div style="text-align: right">
+    <a href = "{{pathFor 'register'}}">Signup</a>
+  </div>
+
+  <h2>Login</h2>
+  <form class="login container">
+    <p>Email: <input type="email" id="email" name="email"></p>
+    <p>Password: <input type="password" id="password" name="password"></p>
+    <p><button type="button" id="login-button">Login</button></p>
+  </form> 
+</template>
+
+<!-- Root Page To Be Redirected To Login -->
+<template name="root">
+  {{> login}}
+</template>
+
+<!-- Common Loans Page For All User Types -->
+<template name="loans">
+  <div style="text-align: right">
+    <a href = "{{pathFor 'login'}}">Logout</a>
+  </div>
+
+  {{#if equals loggedInUserRole 'borrower'}}
+    <form class="borrow-form container">
+      <h2>Create New Borrow Request</h2>
+      <p>Amount*: <input type="number" id="amount" name="amount"></p>
+      <p>Message*: <input type="text" id="message" name="message"></p>
+      <p><button type="button" id="borrow-button">Borrow</button></p>
+    </form>
+  {{/if}}
+
+  <h2>Loans</h2>
+  <table>
+    <tr>
+      <th>Borrower</th>
+      <th>Amount</th>
+      <th>Message</th>
+      <th>Status</th>
+      <th>Requested Date</th>
+      <th>Lender</th>
+      <th>Paid Date</th>
+      <th>Action</th>
+
+    </tr>
+    {{#each loanslist}}
+      <tr>
+        <td>{{borrower_username}}</td>
+        <td>{{amount}}</td>
+        <td>{{message}}</td>
+        <td>
+          {{#if lender_id}}
+            Paid
+          {{else}}
+            Pending
+          {{/if}}
+        </td>
+        <td>{{createdAt}}</td>
+        <td>{{lender_username}}</td>
+        <td>{{paid_on}}</td>
+        <td>
+          {{#if equals role 'lender'}}
+            {{#if lender_id}}
+              -
+            {{else}}
+              <button class='payLoan' data-loan-id='{{_id}}' id='{{_id}}'>Pay</button>
+            {{/if}}
+          {{else}}
+              -
+          {{/if}}
+         </td>
+      </tr>
+    {{/each}}
+  </table>
+</template>
+
