@@ -2,3 +2,63 @@ body {
   padding: 10px;
   font-family: sans-serif;
 }
+
+table {
+   font-family: arial, sans-serif;
+   border-collapse: collapse;
+   width: 100%;
+ }
+
+ td, th {
+   border: 1px solid #dddddd;
+   text-align: left;
+   padding: 8px;
+ }
+
+ tr:nth-child(even) {
+   background-color: #dddddd;
+ }
+
+ form {
+  border: 3px solid #f1f1f1;
+}
+
+/* Full-width inputs */
+input[type=text], input[type=password], input[type=email], input[type=number] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #008CBA;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  width: 50%;
+}
+
+body{
+  width: 70%;
+  margin: auto;
+}
+
+a{
+  font-size: 20px;
+}
+
+select{
+  font-size: 16px;
+}
